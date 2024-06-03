@@ -1,0 +1,27 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django-CRUD-PIA</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{%static 'main.css'%}">
+
+
+</head>
+<body>
+    <div class="col-md-4 offset-md-4 mt-3">
+        <h4>Actualizacion del platillo {{comida.id}}</h4>
+        <form action="{% url 'actualizar_platillo' comida.id %}" method="POST" class="card card-body mb-4">
+            {% csrf_token %}
+            <label for="">ID del platillo: {{comida.id}}</label>
+            <input type="text" name="name" value='{{comida.name}}' placeholder="Nombre del platillo" required class="form-control mb-3">
+            <textarea name="description" rows="4" placeholder="Descripcion del platillo" required class="form-control mb-3">{{comida.description}}</textarea>
+            <input name="price" rows="1" value='{{comida.price}}' placeholder="Precio del platillo" required class="form-control mb-3">
+            <button class="btn btn-info m-1">Actualizar cambios</button>
+        </form>
+    </div>
+</body>
+</html>

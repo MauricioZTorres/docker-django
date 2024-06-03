@@ -1,0 +1,58 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django-CRUD-PIA</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{%static 'main.css'%}">
+
+
+</head>
+<body>
+   <div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1>Estas en el menu</h1>
+
+            <form action="/menu/agregar/" method="POST" class="card card-body mb-4">
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="Nombre del platillo" required class="form-control mb-3">
+                <textarea name="description" rows="4" placeholder="Descripcion del platillo" required class="form-control mb-3"></textarea>
+                <textarea name="price" rows="1" placeholder="Precio del platillo" required class="form-control mb-3"></textarea>
+                <button class="btn btn-outline-success">Guardar platillo</button>
+            </form>
+        
+            {% for comida in menu %}
+                <div class="card card-body mb-3 text-dark d-flex flex-row">
+                    <div class="container">
+                        <h4>{{comida.name}}</h4>
+                        <p>{{comida.description}}</p>
+                        <h6 class="text-success">${{comida.price}}</h6>
+                    </div>
+                   
+                    <div>
+                        <form action="{% url 'eliminar_platillo' comida.id %}" method="POST">
+                            {% csrf_token %}
+                            <button class="btn btn-outline-danger m-1">Eliminar</button>
+                        </form>
+            
+                        <form action="{% url 'actualizar_platillo' comida.id %}" method="GET">
+                            <button class="btn btn-outline-info m-1">Actualizar</button>
+                        </form>
+                    </div>
+                    
+                </div>
+            {% empty %}
+                <div>
+                    <h1 class="h4 text-warning"><em>No se encuentran platillos o hubo algun problema con la base de datos</em></h1>
+                </div>
+            {% endfor %}
+        
+        </div>
+    </div>
+   </div>
+</body>
+</html>
